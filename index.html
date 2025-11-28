@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moe Taqatqa | Data Analyst Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Optional: Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Apple-ish gradient, animated */
+      --bg-gradient: radial-gradient(circle at top left, #5f8cff 0%, #24123b 35%, #050618 80%);
+      --glass-bg: rgba(12, 16, 35, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.22);
+      --text-main: #f5f5f7;
+      --text-muted: #c5c5d1;
+      --accent: #54a3ff;
+      --accent-soft: rgba(84, 163, 255, 0.18);
+      --radius-xl: 24px;
+      --shadow-soft: 0 22px 50px rgba(0, 0, 0, 0.65);
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      background-size: 220% 220%;
+      animation: bgShift 24s ease-in-out infinite alternate;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      padding: 40px 16px 100px; /* extra bottom for dock */
+      position: relative;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 40%; }
+      100% { background-position: 0% 100%; }
+    }
+
+    @keyframes floatSoft {
+      0%   { transform: translateY(0px) translateX(0px); }
+      50%  { transform: translateY(-6px) translateX(3px); }
+      100% { transform: translateY(0px) translateX(0px); }
+    }
+
+    @keyframes floatSoftReverse {
+      0%   { transform: translateY(0px) translateX(0px); }
+      50%  { transform: translateY(5px) translateX(-3px); }
+      100% { transform: translateY(0px) translateX(0px); }
+    }
+
+    @keyframes buttonGlow {
+      0%   { box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6); }
+      50%  { box-shadow: 0 18px 40px rgba(84, 163, 255, 0.9); }
+      100% { box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6); }
+    }
+
+    @keyframes dockPulse {
+      0%   { transform: translateY(0) scale(1); }
+      50%  { transform: translateY(-4px) scale(1.08); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    /* --- Mac-style desktop bar --- */
+
+    .desktop-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(5, 6, 20, 0.85),
+        rgba(5, 6, 20, 0.55)
+      );
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 50;
+    }
+
+    .desktop-left,
+    .desktop-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .desktop-apple {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #d4e4ff);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    }
+
+    .desktop-app-name {
+      font-weight: 600;
+      color: #f5f5f7;
+    }
+
+    .desktop-menu-item {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+
+    .desktop-menu-item:hover {
+      opacity: 1;
+    }
+
+    .desktop-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #5bff87;
+      box-shadow: 0 0 10px rgba(91, 255, 135, 0.9);
+    }
+
+    .desktop-status-label {
+      opacity: 0.85;
+    }
+
+    /* Layout */
+
+    .page {
+      max-width: var(--max-width);
+      margin: 40px auto 0; /* push down to clear desktop bar */
+    }
+
+    header {
+      position: sticky;
+      top: 34px; /* under desktop bar */
+      z-index: 20;
+      padding: 12px 0 18px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(8, 10, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-left span.logo-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-right: 8px;
+      background: radial-gradient(circle at 30% 30%, #e4f2ff, #54a3ff);
+      box-shadow: 0 0 18px rgba(84, 163, 255, 0.9);
+    }
+
+    .nav-left span.logo-text {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 0.95rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .nav-link {
+      position: relative;
+      padding-bottom: 2px;
+      cursor: pointer;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 0;
+      background: linear-gradient(90deg, #54a3ff, #9d7bff);
+      border-radius: 999px;
+      transition: width 0.2s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: #f5f5f7;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    main {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    section {
+      scroll-margin-top: 110px; /* consider desktop bar + nav */
+    }
+
+    /* --- Mac window style wrapper --- */
+
+    .window {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: rgba(6, 8, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transform: translateY(0);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .window:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.85);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .window-header {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      background: linear-gradient(
+        to bottom,
+        rgba(20, 20, 35, 0.95),
+        rgba(8, 8, 22, 0.9)
+      );
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .window-dots {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-right: 8px;
+    }
+
+    .window-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+
+    .window-dot.red {
+      background: #ff5f57;
+      box-shadow: 0 0 8px rgba(255, 95, 87, 0.7);
+    }
+
+    .window-dot.yellow {
+      background: #febc2e;
+      box-shadow: 0 0 8px rgba(254, 188, 46, 0.7);
+    }
+
+    .window-dot.green {
+      background: #28c840;
+      box-shadow: 0 0 8px rgba(40, 200, 64, 0.7);
+    }
+
+    .window-title {
+      opacity: 0.85;
+    }
+
+    .window-body {
+      background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.01)
+        ),
+        var(--glass-bg);
+    }
+
+    .hero-float-left {
+      animation: floatSoft 16s ease-in-out infinite;
+    }
+
+    .hero-float-right {
+      animation: floatSoftReverse 20s ease-in-out infinite;
+    }
+
+    /* Hero */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-main {
+      padding: 26px 26px 24px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      cursor: default;
+    }
+
+    .hero-badge span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #5bff87;
+      box-shadow: 0 0 12px rgba(91, 255, 135, 0.9);
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: 10px;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(90deg, #f5f5f7, #d0e3ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 34rem;
+      margin-bottom: 18px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .hero-tag {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(8, 10, 20, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .hero-tag:hover {
+      background: rgba(8, 10, 20, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      font-size: 0.9rem;
+      padding: 9px 18px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #54a3ff, #9d7bff);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+      animation: buttonGlow 4s ease-in-out infinite;
+    }
+
+    .btn-primary::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -40%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0)
+      );
+      transform: skewX(-20deg) translateX(-100%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .btn-primary:hover::before {
+      transform: skewX(-20deg) translateX(220%);
+      transition: transform 0.7s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(13, 16, 30, 0.8);
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(13, 16, 30, 0.95);
+      transform: translateY(-1px);
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-aside {
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 0.84rem;
+    }
+
+    .hero-metric {
+      padding: 12px 13px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+    }
+
+    .hero-metric strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .hero-aside-footer {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Section headings */
+
+    .section-heading {
+      margin: 18px 4px 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #d0d3e2;
+    }
+
+    .section-subtitle {
+      margin: 0 4px 16px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Projects */
+
+    .projects-window-body {
+      padding: 18px 18px 20px;
+    }
+
+    .project-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .filter-chip {
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(8, 10, 20, 0.8);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease, color 0.15s ease;
+    }
+
+    .filter-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .filter-chip.active {
+      background: linear-gradient(135deg, #54a3ff, #9d7bff);
+      color: #f5f5f7;
+      border-color: transparent;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      border-radius: 18px;
+      background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.09),
+          rgba(10, 10, 30, 0.92)
+        );
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 14px 16px 13px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .project-pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      background: rgba(0, 0, 0, 0.55);
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .project-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .project-subtitle {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .project-body {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 8px;
+      max-height: 3.5em; /* collapsed */
+      overflow: hidden;
+      transition: max-height 0.18s ease;
+    }
+
+    .project-body.expanded {
+      max-height: 500px; /* big enough */
+    }
+
+    .project-body strong {
+      color: #e6e7f3;
+      font-weight: 500;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .project-tech span {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .project-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .project-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding-bottom: 1px;
+      border-bottom: 1px solid rgba(84, 163, 255, 0.4);
+      color: #e3eeff;
+      cursor: pointer;
+    }
+
+    .toggle-details {
+      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(6, 8, 20, 0.85);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .toggle-details:hover {
+      background: rgba(84, 163, 255, 0.16);
+      color: #f5f5f7;
+      border-color: rgba(84, 163, 255, 0.7);
+    }
+
+    /* Skills */
+
+    .skills-window-body {
+      padding: 18px 18px 16px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-card {
+      padding: 16px 16px 14px;
+      border-radius: 20px;
+      background: rgba(8, 10, 20, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.6);
+      font-size: 0.86rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+      cursor: default;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.26);
+    }
+
+    .skill-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      padding-left: 0;
+      color: var(--text-muted);
+    }
+
+    .skill-list li {
+      margin-bottom: 3px;
+    }
+
+    /* About & Contact */
+
+    .about-window-body,
+    .contact-window-body {
+      padding: 18px 18px 16px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .about-window-body p + p {
+      margin-top: 10px;
+    }
+
+    .contact-links {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.86rem;
+    }
+
+    .contact-links a {
+      padding-bottom: 1px;
+      border-bottom: 1px solid rgba(84, 163, 255, 0.5);
+      color: #e3eeff;
+    }
+
+    footer {
+      margin-top: 26px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* --- Mac-style Dock --- */
+
+    .dock {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      background: rgba(5, 6, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 45;
+    }
+
+    .dock-item {
+      position: relative;
+    }
+
+    .dock-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #d4e4ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .dock-icon span {
+      transform: translateY(1px);
+    }
+
+    .dock-icon:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.8);
+      background: radial-gradient(circle at 30% 30%, #f5f5f7, #cfdcff);
+    }
+
+    .dock-label {
+      position: absolute;
+      bottom: 58px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(10, 12, 25, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+    }
+
+    .dock-item:hover .dock-label {
+      opacity: 1;
+    }
+
+    .dock-icon.active {
+      box-shadow: 0 14px 30px rgba(84, 163, 255, 0.9);
+      background: radial-gradient(circle at 30% 30%, #f5f5ff, #9db7ff);
+      animation: dockPulse 2.6s ease-in-out infinite;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 800px) {
+      .nav {
+        padding-inline: 14px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main {
+        padding: 22px 18px 18px;
+      }
+
+      .hero-aside {
+        padding: 14px 16px 14px;
+      }
+
+      .dock {
+        display: none; /* Hide dock on small screens to avoid crowding */
+      }
+
+      .desktop-bar {
+        font-size: 0.72rem;
+        padding-inline: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Mac-style top desktop bar -->
+  <div class="desktop-bar">
+    <div class="desktop-left">
+      <div class="desktop-apple"></div>
+      <span class="desktop-app-name">Moe&nbsp;OS</span>
+      <span class="desktop-menu-item" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">Home</span>
+      <span class="desktop-menu-item" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Projects</span>
+      <span class="desktop-menu-item" onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</span>
+    </div>
+    <div class="desktop-right">
+      <span class="desktop-status-dot"></span>
+      <span class="desktop-status-label">Data mode</span>
+    </div>
+  </div>
+
+  <div class="page">
+    <header>
+      <div class="nav">
+        <div class="nav-left">
+          <span class="logo-dot"></span>
+          <span class="logo-text">Moe&nbsp;Taqatqa</span>
+        </div>
+        <nav class="nav-links">
+          <a href="#home" class="nav-link" data-section="home">Home</a>
+          <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+          <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+          <a href="#about" class="nav-link" data-section="about">About</a>
+          <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="home" class="hero">
+        <div class="window hero-float-left">
+          <div class="window-header">
+            <div class="window-dots">
+              <span class="window-dot red"></span>
+              <span class="window-dot yellow"></span>
+              <span class="window-dot green"></span>
+            </div>
+            <span class="window-title">Moe · Overview</span>
+          </div>
+          <div class="window-body hero-main">
+            <div class="hero-badge">
+              <span class="dot"></span>
+              <span>Available for data analyst roles & projects</span>
+            </div>
+            <h1 class="hero-title">
+              Data analyst turning
+              <span class="hero-highlight">complex data into clear decisions.</span>
+            </h1>
+            <p class="hero-subtitle">
+              I design data stories, dashboards, and models that help teams move faster
+              and make confident, data-driven decisions.
+            </p>
+
+            <div class="hero-tags">
+              <span class="hero-tag">SQL · Python · Power BI</span>
+              <span class="hero-tag">Data Cleaning & EDA</span>
+              <span class="hero-tag">Dashboard Design</span>
+              <span class="hero-tag">Gaming & music analytics</span>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+                View projects
+              </button>
+              <!-- Make sure this file exists in the same folder -->
+              <a href="Mohammed_Taqatqa_CV.pdf" class="btn btn-ghost" download>
+                Download CV
+              </a>
+            </div>
+
+            <p class="hero-note">
+              Bonus: I also explore analytics around gaming and music in my side projects.
+            </p>
+          </div>
+        </div>
+
+        <div class="window hero-float-right">
+          <div class="window-header">
+            <div class="window-dots">
+              <span class="window-dot red"></span>
+              <span class="window-dot yellow"></span>
+              <span class="window-dot green"></span>
+            </div>
+            <span class="window-title">Moe · Quick stats</span>
+          </div>
+          <div class="window-body hero-aside">
+            <div class="hero-metric">
+              <strong>End-to-end analytics</strong>
+              From raw data and cleaning in SQL/Python through to interactive dashboards and
+              storytelling for business stakeholders.
+            </div>
+            <div class="hero-metric">
+              <strong>Toolkit</strong>
+              SQL · Python (Pandas) · Power BI / Tableau · Excel · Git & GitHub · Data visualization,
+              basic statistics, and experiment thinking.
+            </div>
+            <div class="hero-metric">
+              <strong>Focus</strong>
+              Clarity, structure, and turning real-world messy data into answers that people
+              can actually use.
+            </div>
+            <div class="hero-aside-footer">
+              This portfolio is a snapshot of how I think about data: clear, structured, and focused
+              on impact.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects">
+        <h2 class="section-heading">Projects</h2>
+        <p class="section-subtitle">
+          Selected work showing how I clean data, analyze it, and communicate insights through
+          visuals and clear narratives.
+        </p>
+
+        <div class="window">
+          <div class="window-header">
+            <div class="window-dots">
+              <span class="window-dot red"></span>
+              <span class="window-dot yellow"></span>
+              <span class="window-dot green"></span>
+            </div>
+            <span class="window-title">Moe · Projects</span>
+          </div>
+          <div class="window-body projects-window-body">
+            <div class="project-filters">
+              <button class="filter-chip active" data-filter="all">All</button>
+              <button class="filter-chip" data-filter="customer">Customer Analytics</button>
+              <button class="filter-chip" data-filter="ecommerce">E-commerce</button>
+              <button class="filter-chip" data-filter="gaming">Gaming</button>
+            </div>
+
+            <div class="projects-grid">
+              <!-- Project 1 -->
+              <article class="project-card" data-category="customer">
+                <div class="project-pill">Customer Analytics</div>
+                <h3 class="project-title">Customer Churn Insights Dashboard</h3>
+                <p class="project-subtitle">Understanding why customers leave and how to keep them.</p>
+                <p class="project-body">
+                  <strong>Problem:</strong> A subscription-based product needed to identify which
+                  customers were most at risk of churn and why.<br><br>
+                  <strong>What I did:</strong> Cleaned and joined usage, billing, and support data in
+                  SQL and Python, built a simple churn model, and designed an interactive Power BI
+                  dashboard with filters by segment, region, and plan type.<br><br>
+                  <strong>Outcome:</strong> Highlighted three high-risk segments and key churn drivers,
+                  helping prioritize retention actions and focus retention campaigns where they matter most.
+                </p>
+                <div class="project-tech">
+                  <span>SQL</span>
+                  <span>Python (Pandas)</span>
+                  <span>Power BI</span>
+                  <span>Data Cleaning</span>
+                  <span>Churn Modeling</span>
+                </div>
+                <div class="project-footer-row">
+                  <div class="project-links">
+                    <!-- Replace with real links when ready -->
+                    <a href="#">View dashboard / case study</a>
+                    <a href="#">View code on GitHub</a>
+                  </div>
+                  <button class="toggle-details">View details ▾</button>
+                </div>
+              </article>
+
+              <!-- Project 2 -->
+              <article class="project-card" data-category="ecommerce">
+                <div class="project-pill">E-commerce</div>
+                <h3 class="project-title">Sales Performance Analysis</h3>
+                <p class="project-subtitle">From raw transaction data to clear revenue insights.</p>
+                <p class="project-body">
+                  <strong>Problem:</strong> Large volumes of sales data but no unified view of product,
+                  channel, or regional performance.<br><br>
+                  <strong>What I did:</strong> Aggregated order and customer data into a clean model,
+                  created KPIs (revenue, average order value, repeat rate), and built time-series views
+                  to compare performance across months, products, and marketing channels.<br><br>
+                  <strong>Outcome:</strong> Revealed top-performing products and identified a
+                  low-performing marketing channel, guiding budget reallocation and more focused
+                  merchandising.
+                </p>
+                <div class="project-tech">
+                  <span>Python</span>
+                  <span>Pandas</span>
+                  <span>Visualization</span>
+                  <span>Tableau / Power BI</span>
+                </div>
+                <div class="project-footer-row">
+                  <div class="project-links">
+                    <a href="#">View notebook</a>
+                    <a href="#">View report</a>
+                  </div>
+                  <button class="toggle-details">View details ▾</button>
+                </div>
+              </article>
+
+              <!-- Project 3 -->
+              <article class="project-card" data-category="gaming">
+                <div class="project-pill">Personal · Gaming</div>
+                <h3 class="project-title">Gaming Engagement Analytics</h3>
+                <p class="project-subtitle">Exploring how play patterns relate to player retention.</p>
+                <p class="project-body">
+                  <strong>Problem:</strong> Understand how early-session behavior relates to long-term
+                  engagement in a gaming dataset.<br><br>
+                  <strong>What I did:</strong> Analyzed session length, frequency, and day-1/7/30
+                  retention; segmented players based on play style and visualized retention curves
+                  and progression patterns.<br><br>
+                  <strong>Outcome:</strong> Found that early consistent play was strongly associated
+                  with long-term retention and identified patterns to inform onboarding, rewards, and
+                  in-game events.
+                </p>
+                <div class="project-tech">
+                  <span>Python</span>
+                  <span>Pandas</span>
+                  <span>Jupyter</span>
+                  <span>Matplotlib / Plotly</span>
+                </div>
+                <div class="project-footer-row">
+                  <div class="project-links">
+                    <a href="#">View analysis</a>
+                  </div>
+                  <button class="toggle-details">View details ▾</button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section id="skills">
+        <h2 class="section-heading">Skills</h2>
+        <p class="section-subtitle">
+          A toolkit focused on cleaning data, analyzing it effectively, and communicating insights
+          clearly to stakeholders.
+        </p>
+
+        <div class="window">
+          <div class="window-header">
+            <div class="window-dots">
+              <span class="window-dot red"></span>
+              <span class="window-dot yellow"></span>
+              <span class="window-dot green"></span>
+            </div>
+            <span class="window-title">Moe · Skills & tools</span>
+          </div>
+          <div class="window-body skills-window-body">
+            <div class="skills-grid">
+              <div class="skill-card">
+                <div class="skill-title">Core Analytics</div>
+                <ul class="skill-list">
+                  <li>SQL (joins, CTEs, window functions)</li>
+                  <li>Python (Pandas, data manipulation)</li>
+                  <li>Exploratory data analysis (EDA)</li>
+                  <li>Data cleaning and preprocessing</li>
+                </ul>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-title">Visualization & Reporting</div>
+                <ul class="skill-list">
+                  <li>Power BI / Tableau dashboard design</li>
+                  <li>Building KPI views and reports</li>
+                  <li>Excel (pivot tables, formulas, charts)</li>
+                  <li>Storytelling with data for non-technical audiences</li>
+                </ul>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-title">Supporting Skills</div>
+                <ul class="skill-list">
+                  <li>Git & GitHub for version control</li>
+                  <li>Basic statistics and experiment thinking</li>
+                  <li>Documentation and clear communication</li>
+                  <li>Curiosity: always exploring new datasets and ideas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about">
+        <h2 class="section-heading">About</h2>
+        <div class="window">
+          <div class="window-header">
+            <div class="window-dots">
+              <span class="window-dot red"></span>
+              <span class="window-dot yellow"></span>
+              <span class="window-dot green"></span>
+            </div>
+            <span class="window-title">Moe · About</span>
+          </div>
+          <div class="window-body about-window-body">
+            <p>
+              I’m <strong>Moe Taqatqa</strong>, a data analyst who enjoys turning messy, real-world
+              data into clean insights and visuals. I like working end-to-end: from understanding the
+              business question and cleaning the data, to building dashboards and sharing clear
+              recommendations.
+            </p>
+            <p>
+              My main tools are <strong>SQL, Python, Power BI, and Excel</strong>, and I care a lot
+              about how insights are presented, not just how they’re calculated.
+            </p>
+            <p>
+              Outside of work, I’m into <strong>gaming and music</strong>, and I often bring those
+              interests into side projects — exploring play patterns, listening habits, and any data
+              that tells an interesting story.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact">
+        <h2 class="section-heading">Contact</h2>
+        <div class="window">
+          <div class="window-header">
+            <div class="window-dots">
+              <span class="window-dot red"></span>
+              <span class="window-dot yellow"></span>
+              <span class="window-dot green"></span>
+            </div>
+            <span class="window-title">Moe · Contact</span>
+          </div>
+          <div class="window-body contact-window-body">
+            <p>
+              Interested in working together, seeing more of my work, or just talking about data,
+              gaming, or music? I’d be happy to connect.
+            </p>
+            <div class="contact-links">
+              <a href="mailto:Moh1999ammed25@gmail.com">Email</a>
+              <a href="https://www.linkedin.com/in/mohammed-taqatqa-2b9922219/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href="https://github.com/HKJ-MOE" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        © <span id="year"></span> Moe Taqatqa · Built with clean design and a touch of liquid glass.
+      </footer>
+    </main>
+  </div>
+
+  <!-- Mac-style dock with “app icons” for sections -->
+  <div class="dock">
+    <div class="dock-item">
+      <a href="#home" class="dock-icon" data-section="home" title="Home">
+        <span>🏠</span>
+      </a>
+      <div class="dock-label">Home</div>
+    </div>
+    <div class="dock-item">
+      <a href="#projects" class="dock-icon" data-section="projects" title="Projects">
+        <span>📊</span>
+      </a>
+      <div class="dock-label">Projects</div>
+    </div>
+    <div class="dock-item">
+      <a href="#skills" class="dock-icon" data-section="skills" title="Skills">
+        <span>🧠</span>
+      </a>
+      <div class="dock-label">Skills</div>
+    </div>
+    <div class="dock-item">
+      <a href="#contact" class="dock-icon" data-section="contact" title="Contact">
+        <span>📬</span>
+      </a>
+      <div class="dock-label">Contact</div>
+    </div>
+  </div>
+
+  <script>
+    // Set current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Toggle project details
+    document.querySelectorAll(".project-card").forEach(card => {
+      const body = card.querySelector(".project-body");
+      const toggle = card.querySelector(".toggle-details");
+      toggle.addEventListener("click", () => {
+        const expanded = body.classList.toggle("expanded");
+        toggle.textContent = expanded ? "Hide details ▴" : "View details ▾";
+      });
+    });
+
+    // Project filters
+    const filterChips = document.querySelectorAll(".filter-chip");
+    const projectCards = document.querySelectorAll(".project-card");
+
+    filterChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        const filter = chip.getAttribute("data-filter");
+
+        filterChips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+
+        projectCards.forEach(card => {
+          const category = card.getAttribute("data-category");
+          if (filter === "all" || category === filter) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Active section highlighting for nav + dock
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
+    const dockIcons = document.querySelectorAll(".dock-icon");
+
+    const setActiveSection = (id) => {
+      navLinks.forEach(link => {
+        link.classList.toggle("active", link.getAttribute("data-section") === id);
+      });
+      dockIcons.forEach(icon => {
+        icon.classList.toggle("active", icon.getAttribute("data-section") === id);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            setActiveSection(id);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.4
+      }
+    );
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
